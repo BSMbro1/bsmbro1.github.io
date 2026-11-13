@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#7c3aed">
+<title>Banadesh | Personal Website</title>
+<style>
+:root{--ink:#20123a;--muted:#66577d;--glass:rgba(255,255,255,.78);--line:rgba(91,48,145,.16);--pink:#ff4fa3;--purple:#7547ff;--blue:#35b8ff;--yellow:#ffd34e}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:linear-gradient(135deg,#dceeff,#d9e8f7 45%,#d7f5f1);min-height:100vh}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.28;background-image:radial-gradient(#fff 1.5px,transparent 1.5px);background-size:28px 28px}
+header{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.72);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{max-width:1050px;margin:auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{font-weight:900;letter-spacing:.5px;font-size:1.15rem;background:linear-gradient(90deg,#137fc0,#2456a6,#079d9a);color:transparent;background-clip:text}
+nav{display:flex;gap:8px;flex-wrap:wrap}nav a{color:var(--ink);text-decoration:none;font-size:.9rem;font-weight:700;padding:8px 10px;border-radius:20px}nav a:hover{background:#e3f0fa}
+main{max-width:1050px;margin:auto;padding:28px 20px 60px}.hero{min-height:390px;display:grid;grid-template-columns:1.35fr .8fr;align-items:center;gap:25px;padding:38px 0}
+.eyebrow{display:inline-block;padding:7px 13px;border-radius:30px;background:#fff8;border:1px solid white;font-size:.82rem;font-weight:800;color:#7840c9}
+h1{font-size:clamp(3rem,8vw,5.8rem);line-height:.98;letter-spacing:-4px;margin:18px 0 12px}.gradient{background:linear-gradient(90deg,#fa419c,#7047ff,#12a8d6);background-clip:text;color:transparent}
+.lead{font-size:1.15rem;color:var(--muted);max-width:570px;line-height:1.7}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.btn{border:0;border-radius:14px;padding:12px 17px;font-weight:800;font-size:.95rem;cursor:pointer;text-decoration:none;display:inline-block;transition:.2s}.btn:hover{transform:translateY(-2px)}.primary{color:white;background:linear-gradient(100deg,#147fc0,#2456a6);box-shadow:0 8px 20px #8e54ce44}.secondary{background:white;color:#1e5e83;border:1px solid var(--line)}
+.orbit-card{height:270px;max-width:290px;width:100%;justify-self:center;border-radius:38px;background:linear-gradient(145deg,#123b69,#167f9e 65%,#20a69a);box-shadow:0 22px 45px #7746b544;display:grid;place-items:center;position:relative;overflow:hidden}
+.orbit-card:before,.orbit-card:after{content:"";position:absolute;border:2px solid #ffffff88;border-radius:50%;width:230px;height:90px;transform:rotate(-28deg)}.orbit-card:after{transform:rotate(55deg);width:270px;height:115px}
+.planet{font-size:6rem;filter:drop-shadow(0 12px 10px #092b4a55);z-index:1;animation:float 4s ease-in-out infinite}.spark{position:absolute;font-size:1.5rem}.s1{top:25px;left:30px}.s2{right:28px;bottom:30px}.s3{right:45px;top:38px}
+@keyframes float{50%{transform:translateY(-12px) rotate(7deg)}}
+section{margin-top:28px;scroll-margin-top:85px}.section-title{font-size:1.8rem;margin:0 0 14px;letter-spacing:-.8px}.section-title span{color:#7947d8}
+.panel{background:var(--glass);border:1px solid #fff;border-radius:24px;padding:23px;box-shadow:0 12px 35px #53318a12}
+.about-grid,.interest-grid,.fact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.interest,.fact{padding:19px;border-radius:19px;background:#fff9;border:1px solid var(--line)}.interest .emoji{font-size:2rem}.interest h3{margin:9px 0 5px}.interest p,.fact p{margin:0;color:var(--muted);line-height:1.55;font-size:.94rem}
+.fact strong{font-size:1.6rem;display:block;margin-bottom:5px;color:#7646d8}
+.quote{font-size:1.25rem;font-weight:800;line-height:1.5;background:linear-gradient(100deg,#e8f4ff,#e1f5f2);border-radius:20px;padding:22px}
+.fun-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.fun-result{font-weight:700;color:#176f86;min-height:26px}
+footer{text-align:center;padding:30px 12px;color:#66577d;font-size:.9rem}
+#topBtn{position:fixed;bottom:18px;right:18px;border:0;border-radius:50%;width:46px;height:46px;background:#174f83;color:white;font-size:1.2rem;box-shadow:0 8px 20px #174f8355;cursor:pointer}
+@media(max-width:700px){.nav{align-items:flex-start;flex-direction:column}nav{gap:2px}nav a{padding:7px 8px;font-size:.82rem}.hero{grid-template-columns:1fr;padding-top:30px}.orbit-card{height:210px;max-width:240px}.about-grid,.interest-grid,.fact-grid{grid-template-columns:1fr}h1{letter-spacing:-2px}.panel{padding:18px}}
+</style>
+</head>
+<body>
+<header><div class="nav"><div class="brand">✦ BANADESH</div><nav aria-label="Main navigation"><a href="#about">About</a><a href="#interests">Interests</a><a href="#facts">Fun facts</a><a href="#hello">Say hello</a></nav></div></header>
+<main>
+<section class="hero" id="home">
+ <div><span class="eyebrow">✨ PERSONAL WEBSITE · EST. 2026</span><h1>Hey, I'm<br><span class="gradient">Banadesh.</span></h1><p class="lead">Welcome to my world! 🌎 A colourful little corner of the internet for big curiosities, random adventures and everything in between.</p><div class="actions"><a class="btn primary" href="#about">Explore my world ↗</a><button class="btn secondary" id="surpriseBtn">Surprise me ✨</button></div><p class="fun-result" id="surprise" aria-live="polite"></p></div>
+ <div class="orbit-card" aria-label="A colourful planet illustration"><span class="spark s1">✦</span><span class="spark s2">⭐</span><span class="spark s3">✧</span><div class="planet">🌍</div></div>
+</section>
+<section id="about"><h2 class="section-title">A little <span>about me</span></h2><div class="panel"><p style="font-size:1.08rem;line-height:1.8;margin:0">I'm Banadesh. I enjoy exploring interesting things, learning new stuff and collecting random experiences. This website is my own tiny corner of the web — still growing, just like me.</p></div></section>
+<section id="interests"><h2 class="section-title">Things I’m <span>into</span></h2><div class="interest-grid">
+ <article class="interest"><div class="emoji">🚀</div><h3>Space</h3><p>Planets, stars, galaxies and the enormous mysteries beyond Earth.</p></article>
+ <article class="interest"><div class="emoji">♟️</div><h3>Chess</h3><p>Thinking ahead, spotting patterns and learning from every game.</p></article>
+ <article class="interest"><div class="emoji">💻</div><h3>Technology</h3><p>Cool gadgets, digital experiments and discovering how things work.</p></article>
+ <article class="interest"><div class="emoji">🎒</div><h3>Random adventures</h3><p>Unexpected plans, little missions and stories worth remembering.</p></article>
+ <article class="interest"><div class="emoji">🎧</div><h3>Music & creativity</h3><p>Making things, finding inspiration and enjoying good sounds.</p></article>
+ <article class="interest"><div class="emoji">🌱</div><h3>Learning</h3><p>Curiosity first. There’s always something new to figure out.</p></article>
+</div></section>
+<section id="facts"><h2 class="section-title">The <span>Banadesh board</span></h2><div class="fact-grid">
+ <div class="fact"><strong>01</strong><p>Curiosity is always switched on.</p></div><div class="fact"><strong>02</strong><p>There is probably a random project in progress.</p></div><div class="fact"><strong>03</strong><p>Small ideas can turn into big adventures.</p></div>
+</div></section>
+<section id="hello"><h2 class="section-title">Leave a little <span>hello</span></h2><div class="panel"><div class="quote">“Stay curious. Keep exploring. Make your own universe.” 🌌</div><p style="color:var(--muted);line-height:1.6">Thanks for visiting my corner of the internet. Tap below to send a little greeting — it stays on this page and isn't sent anywhere.</p><div class="fun-row"><button class="btn primary" id="helloBtn">Send a hello 👋</button><span class="fun-result" id="helloResult" aria-live="polite"></span></div></div></section>
+</main>
+<footer>Built by Banadesh · <span id="year"></span> ✦</footer>
+<button id="topBtn" title="Back to top" aria-label="Back to top">↑</button>
+<script>
+const surprises=["Somewhere out there, a star is shining right now. ✨","Your next great idea could arrive at the most random moment. 💡","The universe is about 13.8 billion years old. 🤯","Every chess game is a new puzzle. ♟️","Adventure mode: always available. 🚀"];
+document.getElementById("surpriseBtn").addEventListener("click",()=>{document.getElementById("surprise").textContent=surprises[Math.floor(Math.random()*surprises.length)]});
+document.getElementById("helloBtn").addEventListener("click",()=>{document.getElementById("helloResult").textContent="Hello received! Hope your day is awesome. 🌈"});
+document.getElementById("topBtn").addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+document.getElementById("year").textContent=new Date().getFullYear();
+</script>
+</body></html>
