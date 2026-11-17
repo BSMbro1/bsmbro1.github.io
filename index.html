@@ -63,34 +63,24 @@ section{margin-top:65px;scroll-margin-top:90px}
  border-radius:30px;color:var(--cyan);
  background:#102640;font-size:.8rem;font-weight:800;
 }
-  .digital-clock{
- margin-top:20px;
- padding:15px 20px;
- display:inline-block;
- background:#101e35;
- border:1px solid #287db4;
- border-radius:15px;
+.digital-clock{
+ margin-top:20px;padding:15px 20px;
+ display:inline-block;background:#101e35;
+ border:1px solid #287db4;border-radius:15px;
  box-shadow:0 0 20px #35b8ff22;
 }
-
 .clock-time{
- font-size:2rem;
- font-weight:900;
- letter-spacing:3px;
- color:var(--cyan);
+ font-size:2rem;font-weight:900;
+ letter-spacing:3px;color:var(--cyan);
  font-variant-numeric:tabular-nums;
 }
-
 .clock-date{
- margin-top:5px;
- color:var(--muted);
- font-size:.8rem;
- letter-spacing:1px;
+ margin-top:5px;color:var(--muted);
+ font-size:.8rem;letter-spacing:1px;
 }
 h1{
  font-size:clamp(3.2rem,9vw,6rem);
- line-height:1;letter-spacing:-3px;
- margin:22px 0 15px;
+ line-height:1;letter-spacing:-3px;margin:22px 0 15px;
 }
 .gradient{
  background:linear-gradient(90deg,#35b8ff,#00e5ff,#8a9dff);
@@ -115,8 +105,7 @@ h1{
  justify-self:center;display:grid;place-items:center;
  position:relative;overflow:hidden;border-radius:35px;
  background:linear-gradient(145deg,#102b51,#075e83);
- border:1px solid #3988bc;
- box-shadow:0 0 45px #087fc044;
+ border:1px solid #3988bc;box-shadow:0 0 45px #087fc044;
 }
 .orbit-card:before,.orbit-card:after{
  content:"";position:absolute;width:250px;height:100px;
@@ -145,8 +134,7 @@ h1{
  transition:.25s;
 }
 .interest:hover,.fact:hover,.gallery-card:hover{
- transform:translateY(-5px);
- border-color:var(--blue);
+ transform:translateY(-5px);border-color:var(--blue);
  box-shadow:0 0 20px #35b8ff22;
 }
 .emoji{font-size:2.2rem}
@@ -155,21 +143,8 @@ h1{
  color:var(--muted);font-size:.94rem;line-height:1.6;
 }
 .gallery-photo{
- width:100%;
- height:100%;
- max-width:100%;
- max-height:100%;
- object-fit:contain;
- display:block;
- border-radius:13px;
-}
-  .gallery-photo{
- width:100%;
- height:125px;
- object-fit:contain;
- display:block;
- border-radius:13px;
-    overflow:hidden;
+ width:100%;height:125px;max-width:100%;
+ object-fit:contain;display:block;border-radius:13px;
 }
 .fact strong{font-size:1.8rem;color:var(--cyan)}
 .fact p{color:var(--muted);line-height:1.6}
@@ -180,6 +155,34 @@ h1{
  background:#12243d;border-radius:12px;
 }
 .fun-result{color:var(--cyan);font-weight:700;min-height:28px;margin-top:15px}
+
+/* RATING SYSTEM */
+.rating-panel{text-align:center}
+.rating-panel p{color:var(--muted);line-height:1.7}
+.rating-stars{
+ display:flex;justify-content:center;
+ flex-wrap:wrap;gap:5px;margin:25px 0;
+}
+.star{
+ background:transparent;border:0;
+ color:#53647d;font-size:2rem;
+ cursor:pointer;padding:4px;
+ transition:.2s;
+}
+.star:hover,.star.active{
+ color:#ffd34e;
+ transform:scale(1.15);
+}
+.rating-number{
+ color:var(--cyan);font-weight:800;
+ font-size:1.1rem;min-height:30px;
+}
+.rating-submit{margin-top:15px}
+.rating-thanks{
+ color:var(--cyan);font-weight:800;
+ min-height:28px;margin-top:18px;
+}
+
 footer{
  text-align:center;padding:30px 15px;
  border-top:1px solid var(--border);
@@ -199,6 +202,7 @@ footer{
  .orbit-card{height:210px;max-width:240px}
  .interest-grid,.fact-grid,.gallery-grid{grid-template-columns:1fr}
  h1{letter-spacing:-2px}
+ .star{font-size:1.7rem;padding:3px}
 }
 </style>
 </head>
@@ -213,6 +217,7 @@ footer{
    <a href="#interests">Interests</a>
    <a href="#gallery">Gallery</a>
    <a href="#facts">Facts</a>
+   <a href="#rate">Rate Here ⭐</a>
    <a href="#hello">Contact</a>
   </nav>
  </div>
@@ -222,10 +227,10 @@ footer{
 <section class="hero" id="home">
  <div>
   <span class="eyebrow">⚡ WEBSITE · EST. 2026</span>
-   <div class="digital-clock">
- <div class="clock-time" id="clockTime">00:00:00</div>
- <div class="clock-date" id="clockDate">Loading date...</div>
-</div>
+  <div class="digital-clock">
+   <div class="clock-time" id="clockTime">00:00:00</div>
+   <div class="clock-date" id="clockDate">Loading date...</div>
+  </div>
   <h1>Hey, I'm<br><span class="gradient">Banadesh.</span></h1>
   <p class="lead">
    Welcome to my website! A little corner of the internet
@@ -289,37 +294,27 @@ footer{
  <h2 class="section-title">My <span>Gallery</span></h2>
  <div class="gallery-grid">
   <article class="gallery-card">
-   <div class="gallery-art"><img
-  src="image_840559b2.jpg"
-  alt="Zeb"
-  class="gallery-photo"
-></div>
-  <h3>Zeb ⚙️</h3>
+   <div class="gallery-art">
+    <img src="image_840559b2.jpg" alt="Zeb" class="gallery-photo">
+   </div>
+   <h3>Zeb ⚙️</h3>
    <p>My personal mini cooling machine. Small in size, big on airflow. A little noisy, but always gets the job done.
    DOB: 16 Oct 2026</p>
   </article>
-   <article class="gallery-card">
- <div class="gallery-art">
-  <img
-src="IDK_%20Your%20Digital%20Companion.png"
-   alt="IDK - ChatGPT"
-   class="gallery-photo"
-  >
- </div>
- <h3>IDK 🤖</h3>
- <p>My digital companion for ideas, experiments, questions and turning random thoughts into reality.</p>
-</article>
-   <article class="gallery-card">
- <div class="gallery-art">
-  <img
-   src="Lexip%20Img%201.jpg"
-   alt="Lexip G6 Thumb Camera"
-   class="gallery-photo"
-  >
- </div>
- <h3>Lexip 📸</h3>
- <p>My tiny G6 thumb camera. Small in size, big on memories.DOB:----</p>
-</article>
+  <article class="gallery-card">
+   <div class="gallery-art">
+    <img src="IDK_%20Your%20Digital%20Companion.png" alt="IDK - ChatGPT" class="gallery-photo">
+   </div>
+   <h3>IDK 🤖</h3>
+   <p>My digital companion for ideas, experiments, questions and turning random thoughts into reality.</p>
+  </article>
+  <article class="gallery-card">
+   <div class="gallery-art">
+    <img src="Lexip%20Img%201.jpg" alt="Lexip G6 Thumb Camera" class="gallery-photo">
+   </div>
+   <h3>Lexip 📸</h3>
+   <p>My tiny G6 thumb camera. Small in size, big on memories. DOB:----</p>
+  </article>
  </div>
 </section>
 
@@ -329,6 +324,38 @@ src="IDK_%20Your%20Digital%20Companion.png"
   <div class="fact"><strong>01</strong><p>Curiosity is always switched on.</p></div>
   <div class="fact"><strong>02</strong><p>There is probably a random project in progress.</p></div>
   <div class="fact"><strong>03</strong><p>Small ideas can become big adventures.</p></div>
+ </div>
+</section>
+
+<!-- RATING SECTION -->
+<section id="rate">
+ <h2 class="section-title">Rate <span>My Website</span> ⭐</h2>
+ <div class="panel rating-panel">
+  <h3>Enjoyed exploring my universe?</h3>
+  <p>Give my website a rating from 1 to 10 stars!</p>
+
+  <div class="rating-stars" id="ratingStars" aria-label="Choose a rating from 1 to 10">
+   <button class="star" data-rating="1" aria-label="1 star">★</button>
+   <button class="star" data-rating="2" aria-label="2 stars">★</button>
+   <button class="star" data-rating="3" aria-label="3 stars">★</button>
+   <button class="star" data-rating="4" aria-label="4 stars">★</button>
+   <button class="star" data-rating="5" aria-label="5 stars">★</button>
+   <button class="star" data-rating="6" aria-label="6 stars">★</button>
+   <button class="star" data-rating="7" aria-label="7 stars">★</button>
+   <button class="star" data-rating="8" aria-label="8 stars">★</button>
+   <button class="star" data-rating="9" aria-label="9 stars">★</button>
+   <button class="star" data-rating="10" aria-label="10 stars">★</button>
+  </div>
+
+  <div class="rating-number" id="ratingNumber" aria-live="polite">
+   Select your stars
+  </div>
+
+  <button class="btn primary rating-submit" id="submitRating">
+   Submit Rating ⭐
+  </button>
+
+  <p class="rating-thanks" id="ratingThanks" aria-live="polite"></p>
  </div>
 </section>
 
@@ -378,7 +405,8 @@ document.getElementById("topBtn").addEventListener("click",()=>{
 });
 
 document.getElementById("year").textContent=new Date().getFullYear();
-  function updateClock(){
+
+function updateClock(){
  const now=new Date();
 
  document.getElementById("clockTime").textContent=
@@ -402,6 +430,59 @@ document.getElementById("year").textContent=new Date().getFullYear();
 
 updateClock();
 setInterval(updateClock,1000);
+
+/* STAR RATING SYSTEM */
+let selectedRating=0;
+
+const stars=document.querySelectorAll(".star");
+const ratingNumber=document.getElementById("ratingNumber");
+const ratingThanks=document.getElementById("ratingThanks");
+
+function selectRating(rating){
+ selectedRating=rating;
+
+ stars.forEach(star=>{
+  const value=Number(star.dataset.rating);
+  star.classList.toggle("active",value<=rating);
+ });
+
+ ratingNumber.textContent=rating+" / 10 stars selected";
+ ratingThanks.textContent="";
+}
+
+stars.forEach(star=>{
+ star.addEventListener("click",()=>{
+  selectRating(Number(star.dataset.rating));
+ });
+});
+
+document.getElementById("submitRating").addEventListener("click",()=>{
+ if(selectedRating===0){
+  ratingThanks.textContent="Please select your stars first! ⭐";
+  return;
+ }
+
+ try{
+  localStorage.setItem("banadeshWebsiteRating",selectedRating);
+ }catch(error){
+  // Rating still works if browser storage is unavailable.
+ }
+
+ ratingThanks.textContent=
+ "Thank you for rating my website "+selectedRating+"/10! 💙";
+});
+
+try{
+ const savedRating=localStorage.getItem("banadeshWebsiteRating");
+ if(savedRating){
+  const rating=Number(savedRating);
+  if(Number.isInteger(rating)&&rating>=1&&rating<=10){
+   selectRating(rating);
+  }
+ }
+}catch(error){
+ // Ignore unavailable browser storage.
+}
 </script>
 </body>
 </html>
