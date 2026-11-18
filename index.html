@@ -182,6 +182,32 @@ h1{
  color:var(--cyan);font-weight:800;
  min-height:28px;margin-top:18px;
 }
+.rating-summary{
+ max-width:520px;margin:25px auto 10px;
+ padding:20px;background:#0b172b;
+ border:1px solid var(--border);border-radius:16px;
+}
+.rating-average{
+ color:#ffd34e;font-size:2.5rem;font-weight:900;
+ line-height:1.2;
+}
+.rating-average small{
+ color:var(--muted);font-size:1rem;margin-left:5px;
+}
+.rating-summary p{margin:7px 0 18px}
+.rating-breakdown{display:grid;gap:8px;text-align:left}
+.rating-row{
+ display:grid;grid-template-columns:42px 1fr 28px;
+ align-items:center;gap:10px;font-size:.85rem;
+ color:var(--muted);
+}
+.rating-track{
+ height:9px;background:#263957;border-radius:20px;overflow:hidden;
+}
+.rating-fill{
+ height:100%;width:0;background:linear-gradient(90deg,#087bc0,#00e5ff);
+ border-radius:20px;transition:width .35s ease;
+}
 
 footer{
  text-align:center;padding:30px 15px;
@@ -334,6 +360,12 @@ footer{
   <h3>Enjoyed exploring my universe?</h3>
   <p>Give my website a rating from 1 to 10 stars!</p>
 
+  <div class="rating-summary" aria-live="polite">
+   <div class="rating-average"><span id="averageRating">--</span><small>/ 10</small></div>
+   <p id="ratingTotal">Loading community ratings...</p>
+   <div id="ratingBreakdown" class="rating-breakdown"></div>
+  </div>
+
   <div class="rating-stars" id="ratingStars" aria-label="Choose a rating from 1 to 10">
    <button class="star" data-rating="1" aria-label="1 star">★</button>
    <button class="star" data-rating="2" aria-label="2 stars">★</button>
@@ -431,58 +463,119 @@ function updateClock(){
 updateClock();
 setInterval(updateClock,1000);
 
-/* STAR RATING SYSTEM */
-let selectedRating=0;
+/* SHARED STAR RATING SYSTEM */
+const RATING_API = "https://script.google.com/macros/s/AKfycbwvV9BJK6PgWMyy3ZXmiJ_sNNygZsclyNZqjGCm7zYqJ2SF4m4r5I_ifUWcPVfAPWB7vg/exec";
 
-const stars=document.querySelectorAll(".star");
-const ratingNumber=document.getElementById("ratingNumber");
-const ratingThanks=document.getElementById("ratingThanks");
+let selectedRating = 0;
+let isSubmittingRating = false;
 
-function selectRating(rating){
- selectedRating=rating;
+const stars = document.querySelectorAll(".star");
+const ratingNumber = document.getElementById("ratingNumber");
+const ratingThanks = document.getElementById("ratingThanks");
+const submitRatingButton = document.getElementById("submitRating");
 
- stars.forEach(star=>{
-  const value=Number(star.dataset.rating);
-  star.classList.toggle("active",value<=rating);
+function selectRating(rating) {
+ selectedRating = rating;
+ stars.forEach(star => {
+  const value = Number(star.dataset.rating);
+  star.classList.toggle("active", value <= rating);
  });
-
- ratingNumber.textContent=rating+" / 10 stars selected";
- ratingThanks.textContent="";
+ ratingNumber.textContent = rating + " / 10 stars selected";
+ ratingThanks.textContent = "";
 }
 
-stars.forEach(star=>{
- star.addEventListener("click",()=>{
-  selectRating(Number(star.dataset.rating));
+stars.forEach(star => {
+ star.addEventListener("click", () => {
+  if (!isSubmittingRating) selectRating(Number(star.dataset.rating));
  });
 });
 
-document.getElementById("submitRating").addEventListener("click",()=>{
- if(selectedRating===0){
-  ratingThanks.textContent="Please select your stars first! ⭐";
+function loadRatings() {
+ const previousScript = document.getElementById("ratingStatsScript");
+ if (previousScript) previousScript.remove();
+
+ const script = document.createElement("script");
+ script.id = "ratingStatsScript";
+ script.src = RATING_API + "?callback=displayRatingStats&t=" + Date.now();
+ script.onerror = () => {
+  document.getElementById("ratingTotal").textContent =
+   "Unable to load community ratings. Please refresh the page.";
+ };
+ document.body.appendChild(script);
+}
+
+window.displayRatingStats = function(data) {
+ const average = Number(data.average) || 0;
+ const total = Number(data.total) || 0;
+ const counts = Array.isArray(data.counts) ? data.counts : Array(10).fill(0);
+
+ document.getElementById("averageRating").textContent =
+  total ? average.toFixed(1) : "—";
+ document.getElementById("ratingTotal").textContent =
+  total + (total === 1 ? " community rating" : " community ratings");
+
+ const breakdown = document.getElementById("ratingBreakdown");
+ breakdown.textContent = "";
+
+ for (let rating = 10; rating >= 1; rating--) {
+  const count = Number(counts[rating - 1]) || 0;
+  const percentage = total ? (count / total) * 100 : 0;
+
+  const row = document.createElement("div");
+  row.className = "rating-row";
+
+  const label = document.createElement("span");
+  label.textContent = rating + " ★";
+
+  const track = document.createElement("div");
+  track.className = "rating-track";
+
+  const fill = document.createElement("div");
+  fill.className = "rating-fill";
+  fill.style.width = percentage + "%";
+  track.appendChild(fill);
+
+  const number = document.createElement("span");
+  number.textContent = count;
+
+  row.append(label, track, number);
+  breakdown.appendChild(row);
+ }
+};
+
+submitRatingButton.addEventListener("click", async () => {
+ if (selectedRating === 0) {
+  ratingThanks.textContent = "Please select your stars first! ⭐";
   return;
  }
+ if (isSubmittingRating) return;
 
- try{
-  localStorage.setItem("banadeshWebsiteRating",selectedRating);
- }catch(error){
-  // Rating still works if browser storage is unavailable.
+ isSubmittingRating = true;
+ submitRatingButton.disabled = true;
+ ratingThanks.textContent = "Sending your rating...";
+
+ try {
+  await fetch(RATING_API, {
+   method: "POST",
+   mode: "no-cors",
+   headers: { "Content-Type": "text/plain;charset=utf-8" },
+   body: JSON.stringify({ rating: selectedRating })
+  });
+
+  ratingThanks.textContent =
+   "Thanks for rating my website " + selectedRating +
+   "/10! The community total will refresh shortly. 💙";
+  setTimeout(loadRatings, 1800);
+ } catch (error) {
+  ratingThanks.textContent =
+   "Couldn't send your rating. Please check your connection and try again.";
+ } finally {
+  isSubmittingRating = false;
+  submitRatingButton.disabled = false;
  }
-
- ratingThanks.textContent=
- "Thank you for rating my website "+selectedRating+"/10! 💙";
 });
 
-try{
- const savedRating=localStorage.getItem("banadeshWebsiteRating");
- if(savedRating){
-  const rating=Number(savedRating);
-  if(Number.isInteger(rating)&&rating>=1&&rating<=10){
-   selectRating(rating);
-  }
- }
-}catch(error){
- // Ignore unavailable browser storage.
-}
+loadRatings();
 </script>
 </body>
 </html>
