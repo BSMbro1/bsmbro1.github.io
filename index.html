@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -97,6 +98,7 @@ h1{
  display:inline-block;transition:.25s;
 }
 .btn:hover{transform:translateY(-3px);box-shadow:0 0 22px #35b8ff55}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
 .primary{background:linear-gradient(100deg,#087bc0,#1553ad);color:white}
 .secondary{background:#101a30;color:var(--cyan)}
 .orbit-card{
@@ -336,24 +338,18 @@ footer{
  <h2 class="section-title">My <span>Gallery</span></h2>
  <div class="gallery-grid">
   <article class="gallery-card">
-   <div class="gallery-art">
-    <img src="image_840559b2.jpg" alt="Zeb" class="gallery-photo">
-   </div>
+   <img src="image_840559b2.jpg" alt="Zeb" class="gallery-photo">
    <h3>Zeb ⚙️</h3>
    <p>My personal mini cooling machine. Small in size, big on airflow. A little noisy, but always gets the job done.
    DOB: 16 Oct 2026</p>
   </article>
   <article class="gallery-card">
-   <div class="gallery-art">
-    <img src="IDK_%20Your%20Digital%20Companion.png" alt="IDK - ChatGPT" class="gallery-photo">
-   </div>
+   <img src="IDK_%20Your%20Digital%20Companion.png" alt="IDK - ChatGPT" class="gallery-photo">
    <h3>IDK 🤖</h3>
    <p>My digital companion for ideas, experiments, questions and turning random thoughts into reality.</p>
   </article>
   <article class="gallery-card">
-   <div class="gallery-art">
-    <img src="Lexip%20Img%201.jpg" alt="Lexip G6 Thumb Camera" class="gallery-photo">
-   </div>
+   <img src="Lexip%20Img%201.jpg" alt="Lexip G6 Thumb Camera" class="gallery-photo">
    <h3>Lexip 📸</h3>
    <p>My tiny G6 thumb camera. Small in size, big on memories. DOB: 17 Nov 2026</p>
   </article>
@@ -369,7 +365,6 @@ footer{
  </div>
 </section>
 
-<!-- RATING SECTION -->
 <section id="rate">
  <h2 class="section-title">Rate <span>My Website</span> ⭐</h2>
  <div class="panel rating-panel">
@@ -385,7 +380,7 @@ footer{
   <div class="rating-form">
    <div class="rating-field">
     <label for="raterName">Your name <span aria-hidden="true">*</span></label>
-    <input id="raterName" type="text" maxlength="60"
+    <input id="raterName" type="text" maxlength="50"
      autocomplete="name" placeholder="Enter your name" required>
    </div>
 
@@ -393,7 +388,7 @@ footer{
     <label for="ratingReview">
      Your feedback <span id="reviewRequiredMark"></span>
     </label>
-    <textarea id="ratingReview" maxlength="1000"
+    <textarea id="ratingReview" maxlength="500"
      placeholder="If you rate below 7, tell me what needs improvement..."></textarea>
     <div class="field-hint" id="reviewHint">
      Required for ratings from 1 to 6. Optional for ratings from 7 to 10.
@@ -402,23 +397,23 @@ footer{
   </div>
 
   <div class="rating-stars" id="ratingStars" aria-label="Choose a rating from 1 to 10">
-   <button class="star" data-rating="1" aria-label="1 star">★</button>
-   <button class="star" data-rating="2" aria-label="2 stars">★</button>
-   <button class="star" data-rating="3" aria-label="3 stars">★</button>
-   <button class="star" data-rating="4" aria-label="4 stars">★</button>
-   <button class="star" data-rating="5" aria-label="5 stars">★</button>
-   <button class="star" data-rating="6" aria-label="6 stars">★</button>
-   <button class="star" data-rating="7" aria-label="7 stars">★</button>
-   <button class="star" data-rating="8" aria-label="8 stars">★</button>
-   <button class="star" data-rating="9" aria-label="9 stars">★</button>
-   <button class="star" data-rating="10" aria-label="10 stars">★</button>
+   <button type="button" class="star" data-rating="1" aria-label="1 star">★</button>
+   <button type="button" class="star" data-rating="2" aria-label="2 stars">★</button>
+   <button type="button" class="star" data-rating="3" aria-label="3 stars">★</button>
+   <button type="button" class="star" data-rating="4" aria-label="4 stars">★</button>
+   <button type="button" class="star" data-rating="5" aria-label="5 stars">★</button>
+   <button type="button" class="star" data-rating="6" aria-label="6 stars">★</button>
+   <button type="button" class="star" data-rating="7" aria-label="7 stars">★</button>
+   <button type="button" class="star" data-rating="8" aria-label="8 stars">★</button>
+   <button type="button" class="star" data-rating="9" aria-label="9 stars">★</button>
+   <button type="button" class="star" data-rating="10" aria-label="10 stars">★</button>
   </div>
 
   <div class="rating-number" id="ratingNumber" aria-live="polite">
    Select your stars
   </div>
 
-  <button class="btn primary rating-submit" id="submitRating">
+  <button type="button" class="btn primary rating-submit" id="submitRating">
    Submit Rating ⭐
   </button>
 
@@ -499,6 +494,7 @@ updateClock();
 setInterval(updateClock,1000);
 
 /* SHARED STAR RATING SYSTEM */
+
 const RATING_API = "https://script.google.com/macros/s/AKfycbwvV9BJK6PgWMyy3ZXmiJ_sNNygZsclyNZqjGCm7zYqJ2SF4m4r5I_ifUWcPVfAPWB7vg/exec";
 
 let selectedRating = 0;
@@ -514,7 +510,7 @@ const ratingReviewInput = document.getElementById("ratingReview");
 const reviewRequiredMark = document.getElementById("reviewRequiredMark");
 const reviewHint = document.getElementById("reviewHint");
 
-// This ID identifies the browser, not a verified real-world person.
+// Browser-based visitor ID, not verified identity.
 function getVisitorId() {
   const storageKey = "banadeshWebsiteRaterId";
   let id = localStorage.getItem(storageKey);
@@ -530,6 +526,11 @@ function getVisitorId() {
   return id;
 }
 
+// Count letters and numbers, not punctuation or spaces.
+function meaningfulCharacters(value) {
+  return value.replace(/[^\p{L}\p{N}]/gu, "");
+}
+
 function updateReviewRequirement() {
   const required = selectedRating > 0 && selectedRating < 7;
 
@@ -539,7 +540,7 @@ function updateReviewRequirement() {
     required ? "(Required)" : "(Optional)";
 
   reviewHint.textContent = required
-    ? "Please explain what needs improvement (required for ratings 1–6)."
+    ? "Please explain what needs improvement. At least 10 meaningful characters."
     : "A written review is optional for ratings 7–10.";
 }
 
@@ -551,9 +552,11 @@ function selectRating(rating) {
     star.classList.toggle("active", value <= rating);
   });
 
-  ratingNumber.textContent = rating + " / 10 stars selected";
-  ratingThanks.textContent = "";
+  ratingNumber.textContent = rating > 0
+    ? rating + " / 10 stars selected"
+    : "Select your stars";
 
+  ratingThanks.textContent = "";
   updateReviewRequirement();
 }
 
@@ -565,6 +568,7 @@ stars.forEach(star => {
   });
 });
 
+// Load community ratings using JSONP.
 function loadRatings() {
   const previousScript = document.getElementById("ratingStatsScript");
 
@@ -629,29 +633,56 @@ window.displayRatingStats = function(data) {
   }
 };
 
+// Submit rating with front-end validation.
 submitRatingButton.addEventListener("click", async () => {
   const name = raterNameInput.value.trim();
   const review = ratingReviewInput.value.trim();
 
-  if (!name) {
-    ratingThanks.textContent =
-      "Please enter your name before submitting.";
+  const validName = meaningfulCharacters(name);
+  const validReview = meaningfulCharacters(review);
 
+  // NAME VALIDATION
+  if (validName.length < 2) {
+    ratingThanks.textContent =
+      "Please enter a meaningful name with at least 2 letters or numbers.";
     raterNameInput.focus();
     return;
   }
 
-  if (selectedRating === 0) {
+  if (name.length > 50) {
     ratingThanks.textContent =
-      "Please select your stars first! ⭐";
-
+      "Your name cannot exceed 50 characters.";
+    raterNameInput.focus();
     return;
   }
 
-  if (selectedRating < 7 && !review) {
+  // RATING VALIDATION
+  if (!Number.isInteger(selectedRating) ||
+      selectedRating < 1 ||
+      selectedRating > 10) {
     ratingThanks.textContent =
-      "Please write a short issue or review for ratings below 7.";
+      "Please select a rating from 1 to 10.";
+    return;
+  }
 
+  // REVIEW VALIDATION
+  if (selectedRating < 7 && validReview.length < 10) {
+    ratingThanks.textContent =
+      "Ratings below 7 need at least 10 meaningful review characters.";
+    ratingReviewInput.focus();
+    return;
+  }
+
+  if (review.length > 500) {
+    ratingThanks.textContent =
+      "Your review cannot exceed 500 characters.";
+    ratingReviewInput.focus();
+    return;
+  }
+
+  if (review.length > 0 && validReview.length < 3) {
+    ratingThanks.textContent =
+      "Please enter meaningful feedback, not just symbols.";
     ratingReviewInput.focus();
     return;
   }
@@ -678,19 +709,17 @@ submitRatingButton.addEventListener("click", async () => {
       })
     });
 
+    // no-cors hides the server's actual response.
+    // Do not claim the rating was definitely saved.
     ratingThanks.textContent =
-      "Thanks, " + name + "! Your " + selectedRating +
-      "/10 rating has been sent. 💙";
+      "Submission sent for processing. Please allow a moment for the ratings to update. 💙";
 
     raterNameInput.value = "";
     ratingReviewInput.value = "";
 
     selectRating(0);
-    ratingNumber.textContent = "Select your stars";
 
-    updateReviewRequirement();
-
-    setTimeout(loadRatings, 1800);
+    setTimeout(loadRatings, 2500);
 
   } catch (error) {
     ratingThanks.textContent =
