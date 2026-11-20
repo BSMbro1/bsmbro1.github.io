@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -140,7 +141,9 @@ h1{
 
 /* FRIENDS SECTION */
 .friends-grid{
- display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;
+ display:grid;
+ grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:18px;
 }
 .friend-card{
  overflow:hidden;padding:14px;border-radius:18px;
@@ -155,7 +158,10 @@ h1{
  width:100%;aspect-ratio:1/1;object-fit:cover;
  display:block;border-radius:13px;background:#0b172b;
 }
-.friend-card h3{margin:13px 0 5px;color:#FF3131}
+.friend-card h3{
+ margin:13px 0 5px;
+ color:#FFFF00;
+}
 .friend-nickname{margin:0;color:var(--cyan);font-weight:700}
 
 .emoji{font-size:2.2rem}
@@ -382,7 +388,10 @@ footer{
   <p class="lead" style="margin-top:-8px;margin-bottom:22px">
     Good memories, great people and the nicknames that stick.
   </p>
+
   <div class="friends-grid">
+
+    <!-- MEMBER 1 -->
     <article class="friend-card">
       <img
         src="friends/WhatsApp%20Image%202026-11-19%20at%207.50.06%20PM.jpeg"
@@ -393,36 +402,67 @@ footer{
       <h3>Milan</h3>
       <p class="friend-nickname">“Tommy”</p>
     </article>
+
+    <!-- MEMBER 2 -->
     <article class="friend-card">
-  <img
-    src="friends/WhatsApp%20Image%202026-11-19%20at%209.45.48%20PM.jpeg"
-    alt="Bhuvan PT"
-    class="friend-photo"
-    loading="lazy"
-  >
-  <h3>Bhuvan PT</h3>
-  <p class="friend-nickname">“BPT”</p>
-</article>
+      <img
+        src="friends/WhatsApp%20Image%202026-11-19%20at%209.45.48%20PM.jpeg"
+        alt="Bhuvan PT"
+        class="friend-photo"
+        loading="lazy"
+      >
+      <h3>Bhuvan PT</h3>
+      <p class="friend-nickname">“BPT”</p>
+    </article>
+
+    <!-- MEMBER 3 -->
     <article class="friend-card">
-  <img
-    src="friends/Screenshot%202026-11-19%20203714.png"
-    alt="Tejas SM"
-    class="friend-photo"
-    loading="lazy"
-  >
-  <h3>Tejas SM</h3>
-  <p class="friend-nickname">“Bengaluru”</p>
-</article>
+      <img
+        src="friends/Screenshot%202026-11-19%20203714.png"
+        alt="Tejas SM"
+        class="friend-photo"
+        loading="lazy"
+      >
+      <h3>Tejas SM</h3>
+      <p class="friend-nickname">“Bengaluru”</p>
+    </article>
+
+    <!-- MEMBER 4 -->
     <article class="friend-card">
-  <img
-    src="friends/Screenshot%202026-11-19%20204039.png"
-    alt="Rajendra"
-    class="friend-photo"
-    loading="lazy"
-  >
-  <h3>Rajendra</h3>
-  <p class="friend-nickname">“Mitochondria”</p>
-</article>
+      <img
+        src="friends/Screenshot%202026-11-19%20204039.png"
+        alt="Rajendra"
+        class="friend-photo"
+        loading="lazy"
+      >
+      <h3>Rajendra</h3>
+      <p class="friend-nickname">“Mitochondria”</p>
+    </article>
+
+    <!-- MEMBER 5 -->
+    <article class="friend-card">
+      <img
+        src="friends/IMG_20261120_080910.jpg"
+        alt="Naithik"
+        class="friend-photo"
+        loading="lazy"
+      >
+      <h3>Naithik</h3>
+      <p class="friend-nickname">“Gattu”</p>
+    </article>
+
+    <!-- MEMBER 6 -->
+    <article class="friend-card">
+      <img
+        src="friends/IMG_20261120_081007.jpg"
+        alt="Anantesh"
+        class="friend-photo"
+        loading="lazy"
+      >
+      <h3>Anantesh</h3>
+      <p class="friend-nickname">“Firefox Teesh”</p>
+    </article>
+
   </div>
 </section>
 
@@ -580,7 +620,6 @@ const ratingReviewInput = document.getElementById("ratingReview");
 const reviewRequiredMark = document.getElementById("reviewRequiredMark");
 const reviewHint = document.getElementById("reviewHint");
 
-// Browser-based visitor ID, not verified identity.
 function getVisitorId() {
   const storageKey = "banadeshWebsiteRaterId";
   let id = localStorage.getItem(storageKey);
@@ -596,7 +635,6 @@ function getVisitorId() {
   return id;
 }
 
-// Count letters and numbers, not punctuation or spaces.
 function meaningfulCharacters(value) {
   return value.replace(/[^\p{L}\p{N}]/gu, "");
 }
@@ -617,193 +655,4 @@ function updateReviewRequirement() {
 function selectRating(rating) {
   selectedRating = rating;
 
-  stars.forEach(star => {
-    const value = Number(star.dataset.rating);
-    star.classList.toggle("active", value <= rating);
-  });
-
-  ratingNumber.textContent = rating > 0
-    ? rating + " / 10 stars selected"
-    : "Select your stars";
-
-  ratingThanks.textContent = "";
-  updateReviewRequirement();
-}
-
-stars.forEach(star => {
-  star.addEventListener("click", () => {
-    if (!isSubmittingRating) {
-      selectRating(Number(star.dataset.rating));
-    }
-  });
-});
-
-// Load community ratings using JSONP.
-function loadRatings() {
-  const previousScript = document.getElementById("ratingStatsScript");
-
-  if (previousScript) previousScript.remove();
-
-  const script = document.createElement("script");
-
-  script.id = "ratingStatsScript";
-  script.src = RATING_API + "?callback=displayRatingStats&t=" + Date.now();
-
-  script.onerror = () => {
-    document.getElementById("ratingTotal").textContent =
-      "Unable to load community ratings. Please refresh the page.";
-  };
-
-  document.body.appendChild(script);
-}
-
-window.displayRatingStats = function(data) {
-  const average = Number(data.average) || 0;
-  const total = Number(data.total) || 0;
-
-  const counts = Array.isArray(data.counts)
-    ? data.counts
-    : Array(10).fill(0);
-
-  document.getElementById("averageRating").textContent =
-    total ? average.toFixed(1) : "—";
-
-  document.getElementById("ratingTotal").textContent =
-    total + (total === 1
-      ? " community rating"
-      : " community ratings");
-
-  const breakdown = document.getElementById("ratingBreakdown");
-  breakdown.textContent = "";
-
-  for (let rating = 10; rating >= 1; rating--) {
-    const count = Number(counts[rating - 1]) || 0;
-    const percentage = total ? (count / total) * 100 : 0;
-
-    const row = document.createElement("div");
-    row.className = "rating-row";
-
-    const label = document.createElement("span");
-    label.textContent = rating + " ★";
-
-    const track = document.createElement("div");
-    track.className = "rating-track";
-
-    const fill = document.createElement("div");
-    fill.className = "rating-fill";
-    fill.style.width = percentage + "%";
-
-    track.appendChild(fill);
-
-    const number = document.createElement("span");
-    number.textContent = count;
-
-    row.append(label, track, number);
-    breakdown.appendChild(row);
-  }
-};
-
-// Submit rating with front-end validation.
-submitRatingButton.addEventListener("click", async () => {
-  const name = raterNameInput.value.trim();
-  const review = ratingReviewInput.value.trim();
-
-  const validName = meaningfulCharacters(name);
-  const validReview = meaningfulCharacters(review);
-
-  // NAME VALIDATION
-  if (validName.length < 2) {
-    ratingThanks.textContent =
-      "Please enter a meaningful name with at least 2 letters or numbers.";
-    raterNameInput.focus();
-    return;
-  }
-
-  if (name.length > 50) {
-    ratingThanks.textContent =
-      "Your name cannot exceed 50 characters.";
-    raterNameInput.focus();
-    return;
-  }
-
-  // RATING VALIDATION
-  if (!Number.isInteger(selectedRating) ||
-      selectedRating < 1 ||
-      selectedRating > 10) {
-    ratingThanks.textContent =
-      "Please select a rating from 1 to 10.";
-    return;
-  }
-
-  // REVIEW VALIDATION
-  if (selectedRating < 7 && validReview.length < 10) {
-    ratingThanks.textContent =
-      "Ratings below 7 need at least 10 meaningful review characters.";
-    ratingReviewInput.focus();
-    return;
-  }
-
-  if (review.length > 500) {
-    ratingThanks.textContent =
-      "Your review cannot exceed 500 characters.";
-    ratingReviewInput.focus();
-    return;
-  }
-
-  if (review.length > 0 && validReview.length < 3) {
-    ratingThanks.textContent =
-      "Please enter meaningful feedback, not just symbols.";
-    ratingReviewInput.focus();
-    return;
-  }
-
-  if (isSubmittingRating) return;
-
-  isSubmittingRating = true;
-  submitRatingButton.disabled = true;
-
-  ratingThanks.textContent = "Sending your rating...";
-
-  try {
-    await fetch(RATING_API, {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8"
-      },
-      body: JSON.stringify({
-        name: name,
-        rating: selectedRating,
-        review: review,
-        visitorId: getVisitorId()
-      })
-    });
-
-    // no-cors hides the server's actual response.
-    // Do not claim the rating was definitely saved.
-    ratingThanks.textContent =
-      "Submission sent for processing. Please allow a moment for the ratings to update. 💙";
-
-    raterNameInput.value = "";
-    ratingReviewInput.value = "";
-
-    selectRating(0);
-
-    setTimeout(loadRatings, 2500);
-
-  } catch (error) {
-    ratingThanks.textContent =
-      "Couldn't send your rating. Please check your connection and try again.";
-
-  } finally {
-    isSubmittingRating = false;
-    submitRatingButton.disabled = false;
-  }
-});
-
-updateReviewRequirement();
-loadRatings();
-
-</script>
-</body>
-</html>
+  sta
